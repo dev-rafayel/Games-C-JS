@@ -1,0 +1,23 @@
+#xo {
+    text-align: center;
+}
+
+#board {
+    text-align: center;
+}
+
+#cellContainer {
+    display: grid;
+    grid-template-columns: repeat(3, 75px);
+    justify-content: center;
+    margin: auto;
+}
+
+.cell {
+    height: 75px;
+    line-height: 75px;
+    font-size: 50px;
+    border: 2px solid;
+    box-shadow: 0 0 0 2px;
+    cursor: pointer;
+}
