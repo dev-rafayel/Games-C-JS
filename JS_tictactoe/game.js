@@ -24,6 +24,7 @@ function initializeGame() {
   cells.forEach((cell) => cell.addEventListener('click', cellClicked));
   restartnBtn.addEventListener('click', restartGame);
   statusText.textContent = `${currentPlayer}'s turn`;
+  updatePlayerUI();
   runing = true;
 }
 
@@ -41,6 +42,7 @@ function cellClicked() {
   
   if (runing) {
     changePlayer();
+    updatePlayerUI();
   }
 }
 
@@ -48,11 +50,26 @@ function cellClicked() {
 function updateCell(cell, index) {
   columns[index] = currentPlayer;
   cell.textContent = currentPlayer;
+  cell.classList.add(currentPlayer === 'X' ? 'x' : 'o');
 }
 
 function changePlayer() {
   currentPlayer = currentPlayer === 'X' ? 'O' : 'X';
   statusText.textContent = `${currentPlayer}'s turn`;
+}
+
+function updatePlayerUI() {
+  const xBox = document.getElementById('x-side');
+  const oBox = document.getElementById('o-side');
+
+  xBox.classList.remove('active');
+  oBox.classList.remove('active');
+
+  if (currentPlayer === 'X') {
+    xBox.classList.add('active');
+  } else {
+    oBox.classList.add('active');
+  }
 }
 
 // checks if there is win or draw
@@ -81,7 +98,10 @@ function checkBoard() {
 
 function restartGame() {
   cells.forEach((cell) => {
+    const oBox = document.getElementById('o-side');
     cell.textContent = '';
+    cell.classList.remove('x', 'o');
+    oBox.classList.remove('active');
   });
   columns = ['', '', '', '', '', '', '', '', ''];
   currentPlayer = 'X';
