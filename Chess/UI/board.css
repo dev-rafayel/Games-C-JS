@@ -1,0 +1,53 @@
+body {
+  display: flex;
+  justify-content: center;
+  margin: 0;
+  background-color: rgb(48, 46, 43);
+  font-family: Arial, sans-serif;
+}
+
+#board {
+  display: grid;
+  margin-top: 50px;
+  grid-template-columns: repeat(8, 85px);
+  grid-template-rows: repeat(8, 85px);
+  border: 2px solid #333;
+  height: 680px;
+  width: 680px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+}
+
+.cell {
+  position: relative;
+  cursor: pointer;
+}
+
+.whiteCell {
+  background-color: rgb(235, 236, 209);
+}
+.blackCell {
+  background-color: rgb(115, 146, 84);
+}
+
+.light-coords {
+  color: rgb(235, 236, 209);
+}
+.dark-coords {
+  color: rgb(115, 146, 84);
+}
+
+.colLetter {
+    position: absolute;
+    left: 69px;
+    top: 60px;
+    font-size: larger;
+    font-weight: bold;
+}
+
+.rowNumber {
+    position: absolute;
+    font-size: larger;
+    top: 4px;
+    left: 2px;
+    font-weight: bold;
+}
