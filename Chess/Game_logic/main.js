@@ -69,11 +69,13 @@ export class BoardState {
       for (let col = 0; col < 8; ++col) {
         const FigureClass = this.startPositions[row][col];
         if (FigureClass) {
-            this.boardState[row][col] = new FigureClass();
+          this.boardState[row][col] = new FigureClass();
         } else {
-            this.boardState[row][col] = null;
+          this.boardState[row][col] = null;
         }
       }
     }
   }
+
+  getPossibleMoves() {}
 }

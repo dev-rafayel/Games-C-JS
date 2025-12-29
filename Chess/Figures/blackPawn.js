@@ -1,9 +1,14 @@
-import { Figure } from "./Figure.js";
+import { Figure } from './Figure.js';
 
 export class BlackPawn extends Figure {
-    constructor() {
-        super();
-    }
+  constructor() {
+    super();
+    this.color = 'black';
+    this.imagePath = '../Images/bp.png';
+    this.hasMoved = false;
+  }
 
-    validMoves() {}
+  validMoves() {
+    const moves = [];
+  }
 }

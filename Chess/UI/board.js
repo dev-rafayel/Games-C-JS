@@ -1,10 +1,11 @@
 import { BoardState } from '../Game_logic/main.js';
 
 class BoardRenderer {
-  constructor(boardElement) {
-    this.board = boardElement;
+  constructor(board, gameBoard) {
+    this.board = board;
+    this.gameBoard = gameBoard;
     this.renderBoard();
-    this.renderFigures();
+    this.renderFigures(gameBoard);
   }
 
   renderBoard() {
@@ -44,14 +45,25 @@ class BoardRenderer {
         if (figure) {
           const img = document.createElement('img');
           // Continue: must render the figures
-          img.src = '';
-          img.classList.add('');
+          img.src = figure.imagePath;
+          img.classList.add('figure');
+
+          const cell = document.querySelector(
+            `.cell[data-row="${row}"][data-col="${col}"]`
+          );
+          cell.appendChild(img);
         }
       }
     }
   }
 
+  onClick() {}
+
+  selectFigure() {}
+
   renderHighlights() {}
 }
 
-const renderer = new BoardRenderer(document.getElementById('board'));
+const gameBoard = new BoardState();
+gameBoard.initGame();
+const renderer = new BoardRenderer(document.getElementById('board'), gameBoard);

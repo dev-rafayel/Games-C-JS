@@ -1,9 +1,11 @@
-import { Figure } from "./Figure.js";
+import { Figure } from './Figure.js';
 
 export class BlackKing extends Figure {
-    constructor() {
-        super();
-    }
+  constructor() {
+    super();
+    this.color = 'black';
+    this.imagePath = '../Images/bk.png';
+  }
 
-    validMoves() {}
+  validMoves() {}
 }
