@@ -7,5 +7,5 @@ export class WhiteRock extends Figure {
         this.imagePath = '../Images/wr.png';
     }
 
-    validMoves() {}
+    validMoves(figure) {}
 }

@@ -57,9 +57,24 @@ class BoardRenderer {
     }
   }
 
-  onClick() {}
+  onClick() {
+    const board = document.getElementById('board');
+    board.addEventListener('click', (event) => {
+      const target =
+        event.target.nodeType === 1 ? event.target : event.target.parentElement;
+      const cell = target.closest('.cell');
+      const row = parseInt(cell.dataset.row);
+      const col = parseInt(cell.dataset.col);
+      if (cell === null) {
+        return;
+      }
+      this.selectFigure(row, col, board);
+    });
+  }
 
-  selectFigure() {}
+  selectFigure(row, col) {
+    const currentPosition = gameBoard.getPossibleMoves(row, col);
+  }
 
   renderHighlights() {}
 }
@@ -67,3 +82,4 @@ class BoardRenderer {
 const gameBoard = new BoardState();
 gameBoard.initGame();
 const renderer = new BoardRenderer(document.getElementById('board'), gameBoard);
+renderer.onClick();

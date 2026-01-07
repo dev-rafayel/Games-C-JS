@@ -7,5 +7,5 @@ export class WhiteKnight extends Figure {
         this.imagePath = '../Images/wn.png';
     }
 
-    validMoves() {}
+    validMoves(figure) {}
 }

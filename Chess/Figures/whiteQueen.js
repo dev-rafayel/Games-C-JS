@@ -7,5 +7,5 @@ export class WhiteQueen extends Figure  {
         this.imagePath = '../Images/wq.png';
     }
 
-    validMoves() {}
+    validMoves(figure) {}
 }

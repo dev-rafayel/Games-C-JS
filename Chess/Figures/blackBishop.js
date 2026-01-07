@@ -7,7 +7,7 @@ export class BlackBishop extends Figure {
         this.imagePath = '../Images/bb.png'
     }
 
-    validMoves() {
+    validMoves(figure) {
         const moves = [];
     }
 }

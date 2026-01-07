@@ -8,7 +8,7 @@ export class WhitePawn extends Figure {
     this.hasMoved = false;
   }
 
-  validMoves() {
+  validMoves(figure) {
     const moves = [
       [row - 2, col],
       [row - 1, col],

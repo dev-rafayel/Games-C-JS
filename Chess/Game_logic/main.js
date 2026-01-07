@@ -77,5 +77,12 @@ export class BoardState {
     }
   }
 
-  getPossibleMoves() {}
+  getPossibleMoves(row, col) {
+    const figure = this.boardState[row][col];
+    if (figure === null) {
+      return;
+    }
+    console.log(figure);
+    figure.validMoves(figure);
+  }
 }

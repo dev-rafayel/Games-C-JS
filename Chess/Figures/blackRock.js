@@ -7,5 +7,5 @@ export class BlackRock extends Figure {
         this.imagePath = '../Images/br.png';
     }
 
-    validMoves() {}
+    validMoves(figure) {}
 }

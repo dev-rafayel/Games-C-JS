@@ -8,7 +8,13 @@ export class BlackPawn extends Figure {
     this.hasMoved = false;
   }
 
-  validMoves() {
+  validMoves(figure) {
     const moves = [];
+
+    if (!this.hasMoved) {
+        moves.push([row + 2, col]);
+    }
+
+    
   }
 }

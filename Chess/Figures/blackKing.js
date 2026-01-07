@@ -7,5 +7,5 @@ export class BlackKing extends Figure {
     this.imagePath = '../Images/bk.png';
   }
 
-  validMoves() {}
+  validMoves(figure) {}
 }

@@ -7,5 +7,5 @@ export class WhiteBishop extends Figure {
         this.imagePath = '../Images/wb.png';
     }
 
-    validMoves() {}
+    validMoves(figure) {}
 }
