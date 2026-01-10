@@ -1,15 +1,9 @@
-import { WhiteRock } from '/Figures/whiteRock.js';
-import { WhiteKnight } from '/Figures/whiteKnight.js';
-import { WhiteBishop } from '/Figures/whiteBishop.js';
-import { WhiteQueen } from '/Figures/whiteQueen.js';
-import { WhiteKing } from '/Figures/whiteKing.js';
-import { WhitePawn } from '/Figures/whitePawn.js';
-import { BlackRock } from '/Figures/blackRock.js';
-import { BlackKnight } from '/Figures/blackKnight.js';
-import { BlackBishop } from '/Figures/blackBishop.js';
-import { BlackQueen } from '/Figures/blackQueen.js';
-import { BlackKing } from '/Figures/blackKing.js';
-import { BlackPawn } from '/Figures/blackPawn.js';
+import { Rock } from '/Pieces/Rock.js';
+import { Knight } from '/Pieces/Knight.js';
+import { Bishop } from '/Pieces/Bishop.js';
+import { Queen } from '/Pieces/Queen.js';
+import { King } from '/Pieces/King.js';
+import { Pawn } from '/Pieces/Pawn.js';
 
 export class BoardState {
   constructor() {
@@ -18,48 +12,48 @@ export class BoardState {
       .map(() => new Array(8).fill(null));
     this.startPositions = [
       [
-        BlackRock,
-        BlackKnight,
-        BlackBishop,
-        BlackQueen,
-        BlackKing,
-        BlackBishop,
-        BlackKnight,
-        BlackRock,
+        Rock,
+        Knight,
+        Bishop,
+        Queen,
+        King,
+        Bishop,
+        Knight,
+        Rock,
       ],
       [
-        BlackPawn,
-        BlackPawn,
-        BlackPawn,
-        BlackPawn,
-        BlackPawn,
-        BlackPawn,
-        BlackPawn,
-        BlackPawn,
+        Pawn,
+        Pawn,
+        Pawn,
+        Pawn,
+        Pawn,
+        Pawn,
+        Pawn,
+        Pawn,
       ],
       [null, null, null, null, null, null, null, null],
       [null, null, null, null, null, null, null, null],
       [null, null, null, null, null, null, null, null],
       [null, null, null, null, null, null, null, null],
       [
-        WhitePawn,
-        WhitePawn,
-        WhitePawn,
-        WhitePawn,
-        WhitePawn,
-        WhitePawn,
-        WhitePawn,
-        WhitePawn,
+        Pawn,
+        Pawn,
+        Pawn,
+        Pawn,
+        Pawn,
+        Pawn,
+        Pawn,
+        Pawn,
       ],
       [
-        WhiteRock,
-        WhiteKnight,
-        WhiteBishop,
-        WhiteQueen,
-        WhiteKing,
-        WhiteBishop,
-        WhiteKnight,
-        WhiteRock,
+        Rock,
+        Knight,
+        Bishop,
+        Queen,
+        King,
+        Bishop,
+        Knight,
+        Rock,
       ],
     ];
   }
@@ -67,9 +61,11 @@ export class BoardState {
   initGame() {
     for (let row = 0; row < 8; ++row) {
       for (let col = 0; col < 8; ++col) {
-        const FigureClass = this.startPositions[row][col];
-        if (FigureClass) {
-          this.boardState[row][col] = new FigureClass();
+        const pieceClass = this.startPositions[row][col];
+        if (pieceClass && row < 2) {
+          this.boardState[row][col] = new pieceClass('black', false);
+        } else if (pieceClass && row > 5) {
+          this.boardState[row][col] = new pieceClass('white', false);
         } else {
           this.boardState[row][col] = null;
         }
@@ -78,11 +74,11 @@ export class BoardState {
   }
 
   getPossibleMoves(row, col) {
-    const figure = this.boardState[row][col];
-    if (figure === null) {
+    const piece = this.boardState[row][col];
+    if (piece === null) {
       return;
     }
-    console.log(figure);
-    figure.validMoves(figure);
+    console.log(piece);
+    piece.getMoves(piece);
   }
 }

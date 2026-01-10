@@ -5,7 +5,7 @@ class BoardRenderer {
     this.board = board;
     this.gameBoard = gameBoard;
     this.renderBoard();
-    this.renderFigures(gameBoard);
+    this.renderPieces(gameBoard);
   }
 
   renderBoard() {
@@ -38,15 +38,14 @@ class BoardRenderer {
     }
   }
 
-  renderFigures(boardInstance) {
+  renderPieces(boardInstance) {
     for (let row = 0; row < 8; ++row) {
       for (let col = 0; col < 8; ++col) {
-        const figure = boardInstance.boardState[row][col];
-        if (figure) {
+        const piece = boardInstance.boardState[row][col];
+        if (piece) {
           const img = document.createElement('img');
-          // Continue: must render the figures
-          img.src = figure.imagePath;
-          img.classList.add('figure');
+          img.src = piece.imagePath;
+          img.classList.add('piece');
 
           const cell = document.querySelector(
             `.cell[data-row="${row}"][data-col="${col}"]`
@@ -68,11 +67,11 @@ class BoardRenderer {
       if (cell === null) {
         return;
       }
-      this.selectFigure(row, col, board);
+      this.selectPiece(row, col, board);
     });
   }
 
-  selectFigure(row, col) {
+  selectPiece(row, col) {
     const currentPosition = gameBoard.getPossibleMoves(row, col);
   }
 
