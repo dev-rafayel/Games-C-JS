@@ -55,3 +55,19 @@ body {
 .piece {
     width: 85px;
 }
+
+.highlight {
+  position: absolute;
+  height: 28px;
+  width: 28px;
+  border-radius: 50%;
+  background-color: rgba(0, 0, 0, 0.3);
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+}
+
+.selected {
+  background-color: rgb(244, 245, 142);
+}

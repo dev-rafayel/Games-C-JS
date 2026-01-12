@@ -12,11 +12,11 @@ export class Pawn extends Piece {
     const moves = [];
 
     if (!this.hasMoved) {
-        moves.push([row + 2, col]);
+      moves.push([row + 2, col]);
     }
 
-    
+
   }
 
-  isChecked(row, col) {}
+  isChecked(row, col) { }
 }

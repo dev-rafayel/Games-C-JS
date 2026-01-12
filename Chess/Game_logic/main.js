@@ -78,7 +78,6 @@ export class BoardState {
     if (piece === null) {
       return;
     }
-    console.log(piece);
-    piece.getMoves(piece);
+    return piece.getMoves(piece, this.boardState, row, col);
   }
 }

@@ -2,8 +2,9 @@ import { BoardState } from '../Game_logic/main.js';
 
 class BoardRenderer {
   constructor(board, gameBoard) {
-    this.board = board;
-    this.gameBoard = gameBoard;
+    this.board = board; // UI
+    this.gameBoard = gameBoard; // Object containing matrix
+    this.selectedPiece = null; // Track currently selected piece
     this.renderBoard();
     this.renderPieces(gameBoard);
   }
@@ -50,7 +51,9 @@ class BoardRenderer {
           const cell = document.querySelector(
             `.cell[data-row="${row}"][data-col="${col}"]`
           );
-          cell.appendChild(img);
+          if (cell) {
+            cell.appendChild(img);
+          }
         }
       }
     }
@@ -72,10 +75,66 @@ class BoardRenderer {
   }
 
   selectPiece(row, col) {
-    const currentPosition = gameBoard.getPossibleMoves(row, col);
+    const currentPosition = [row, col];
+
+    // Check if click is the same piece again
+    if (
+      this.selectedPiece &&
+      this.selectedPiece[0] === row &&
+      this.selectedPiece[1] === col
+    ) {
+      this.clearAllHighlights();
+      this.selectedPiece = null;
+      return;
+    }
+
+    // Select new piece
+    const pieceMoves = gameBoard.getPossibleMoves(row, col);
+    this.renderHighlights(currentPosition, pieceMoves);
+    this.selectedPiece = currentPosition;
   }
 
-  renderHighlights() {}
+  renderHighlights(currentPosition, pieceMoves) {
+    // Clear all existing highlights
+    this.clearAllHighlights();
+
+    // Add highlight to current position
+    const currentPieceCoords = document.querySelector(
+      `.cell[data-row="${currentPosition[0]}"][data-col="${currentPosition[1]}"]`
+    );
+    if (currentPieceCoords) {
+      currentPieceCoords.classList.add('selected');
+    }
+
+    for (const coords of pieceMoves) {
+      const row = coords[0];
+      const col = coords[1];
+      const cell = document.querySelector(
+        `.cell[data-row="${row}"][data-col="${col}"]`
+      );
+
+      if (cell) {
+        const highlight = document.createElement('div');
+        highlight.classList.add('highlight');
+        cell.appendChild(highlight);
+      }
+    }
+  }
+
+  removeHighlights(highlight) {
+    return highlight.remove();
+  }
+
+  clearAllHighlights() {
+    const existingHighlight = this.board.querySelectorAll('.highlight');
+    existingHighlight.forEach((highlight) => this.removeHighlights(highlight));
+
+    // Remove selected cell highlight
+    const previousSelected = this.board.querySelector('.selected');
+    if (previousSelected) {
+      previousSelected.classList.remove('selected');
+    }
+  }
 }
 
 const gameBoard = new BoardState();
