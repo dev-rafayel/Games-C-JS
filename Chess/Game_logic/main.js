@@ -5,9 +5,11 @@ import { Queen } from '/Pieces/Queen.js';
 import { King } from '/Pieces/King.js';
 import { Pawn } from '/Pieces/Pawn.js';
 
-export class BoardState {
+export class gridBoard {
   constructor() {
-    this.boardState = new Array(8)
+    this.boardState = new Map();
+    this.stepCount = 0; 
+    this.gridBoard = new Array(8)
       .fill(null)
       .map(() => new Array(8).fill(null));
     this.startPositions = [
@@ -63,21 +65,39 @@ export class BoardState {
       for (let col = 0; col < 8; ++col) {
         const pieceClass = this.startPositions[row][col];
         if (pieceClass && row < 2) {
-          this.boardState[row][col] = new pieceClass('black', false);
+          this.gridBoard[row][col] = new pieceClass('black', false);
         } else if (pieceClass && row > 5) {
-          this.boardState[row][col] = new pieceClass('white', false);
+          this.gridBoard[row][col] = new pieceClass('white', false);
         } else {
-          this.boardState[row][col] = null;
+          this.gridBoard[row][col] = null;
         }
       }
     }
   }
 
   getPossibleMoves(row, col) {
-    const piece = this.boardState[row][col];
+    const piece = this.gridBoard[row][col];
     if (piece === null) {
       return;
     }
-    return piece.getMoves(piece, this.boardState, row, col);
+    return piece.getMoves(this.gridBoard, row, col);
+  }
+
+  applyMove(fromClickedPosition, toClickedPosition) {
+    const [fromRow, fromCol] = [fromClickedPosition[0], fromClickedPosition[1]];
+    const [toRow, toCol] = [toClickedPosition[0], toClickedPosition[1]];
+
+    this.gridBoard[toRow][toCol] = this.gridBoard[fromRow][fromCol];
+    this.gridBoard[fromRow][fromCol] = null;
+    
+    ++this.stepCount;
+    this.saveboardState();
+    return [toRow, toCol];
+  }
+
+  saveboardState() {
+    const deepCopy = this.gridBoard.map(row => [...row]);
+    this.boardState.set(this.stepCount, deepCopy);
+    console.log(this.gridBoard);
   }
 }

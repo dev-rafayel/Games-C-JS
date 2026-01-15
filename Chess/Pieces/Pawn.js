@@ -8,15 +8,7 @@ export class Pawn extends Piece {
     this.hasMoved = hasMoved;
   }
 
-  getMoves(piece) {
-    const moves = [];
+  getMoves(piece) {}
 
-    if (!this.hasMoved) {
-      moves.push([row + 2, col]);
-    }
-
-
-  }
-
-  isChecked(row, col) { }
+  isChecked(row, col) {}
 }

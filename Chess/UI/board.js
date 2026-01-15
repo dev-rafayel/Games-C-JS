@@ -1,17 +1,20 @@
-import { BoardState } from '../Game_logic/main.js';
+import { gridBoard } from '../Game_logic/main.js';
+import { Piece } from '../Pieces/Piece.js';
 
 class BoardRenderer {
+  #size = 8;
   constructor(board, gameBoard) {
     this.board = board; // UI
-    this.gameBoard = gameBoard; // Object containing matrix
+    this.gameBoard = gameBoard; // Board data
     this.selectedPiece = null; // Track currently selected piece
+    this.validMoves = null;
     this.renderBoard();
     this.renderPieces(gameBoard);
   }
 
   renderBoard() {
-    for (let row = 0; row < 8; ++row) {
-      for (let col = 0; col < 8; ++col) {
+    for (let row = 0; row < this.#size; ++row) {
+      for (let col = 0; col < this.#size; ++col) {
         const cell = document.createElement('div');
         cell.classList.add('cell');
         cell.classList.add((row + col) & 1 ? 'blackCell' : 'whiteCell');
@@ -39,10 +42,10 @@ class BoardRenderer {
     }
   }
 
-  renderPieces(boardInstance) {
-    for (let row = 0; row < 8; ++row) {
-      for (let col = 0; col < 8; ++col) {
-        const piece = boardInstance.boardState[row][col];
+  renderPieces(gameBoard) {
+    for (let row = 0; row < this.#size; ++row) {
+      for (let col = 0; col < this.#size; ++col) {
+        const piece = gameBoard.gridBoard[row][col];
         if (piece) {
           const img = document.createElement('img');
           img.src = piece.imagePath;
@@ -59,50 +62,107 @@ class BoardRenderer {
     }
   }
 
+  renderChangedBoard(fromClickedPosition, toClickedPosition) {
+    const [fromRow, fromCol] = fromClickedPosition;
+    const [toRow, toCol] = toClickedPosition;
+
+    const fromCell = document.querySelector(
+      `.cell[data-row='${fromRow}'][data-col='${fromCol}']`
+    );
+    const toCell = document.querySelector(
+      `.cell[data-row='${toRow}'][data-col='${toCol}']`
+    );
+
+    if (!fromCell || !toCell) return;
+
+    const pieceImg = fromCell.querySelector('.piece');
+    if (pieceImg) {
+      const capturedPiece = toCell.querySelector('.piece');
+      if (capturedPiece) {
+        capturedPiece.remove();
+      }
+      toCell.appendChild(pieceImg);
+    }
+  }
+
   onClick() {
     const board = document.getElementById('board');
     board.addEventListener('click', (event) => {
       const target =
         event.target.nodeType === 1 ? event.target : event.target.parentElement;
       const cell = target.closest('.cell');
-      const row = parseInt(cell.dataset.row);
-      const col = parseInt(cell.dataset.col);
       if (cell === null) {
         return;
       }
-      this.selectPiece(row, col, board);
+
+      const row = parseInt(cell.dataset.row);
+      const col = parseInt(cell.dataset.col);
+
+      if (this.selectedPiece) {
+        // Check if click is the same piece again
+        if (
+          this.selectedPiece &&
+          this.selectedPiece[0] === row &&
+          this.selectedPiece[1] === col
+        ) {
+          this.clearAllHighlights();
+          this.selectedPiece = null;
+          this.validMoves = null;
+          return;
+        }
+
+        const isValidMove = this.validMoves.some(
+          (move) => move[0] === row && move[1] === col
+        );
+
+        // Apply move
+        if (isValidMove) {
+          gameBoard.applyMove(this.selectedPiece, [row, col]);
+          this.clearAllHighlights();
+          this.renderChangedBoard(this.selectedPiece, [row, col]);
+          this.selectedPiece = null;
+          this.validMoves = null;
+        } else {
+          // Select another piece
+          if (this.gameBoard.gridBoard[row][col] !== null) {
+            this.selectPiece(row, col, board);
+          } else {
+            // Deselect piece
+            this.clearAllHighlights();
+            this.selectedPiece = null;
+            this.validMoves = null;
+          }
+        }
+      } else {
+        this.selectPiece(row, col, board);
+      }
     });
   }
 
   selectPiece(row, col) {
-    const currentPosition = [row, col];
-
-    // Check if click is the same piece again
-    if (
-      this.selectedPiece &&
-      this.selectedPiece[0] === row &&
-      this.selectedPiece[1] === col
-    ) {
-      this.clearAllHighlights();
-      this.selectedPiece = null;
-      return;
-    }
+    const clickedPosition = [row, col];
 
     // Select new piece
     const pieceMoves = gameBoard.getPossibleMoves(row, col);
-    this.renderHighlights(currentPosition, pieceMoves);
-    this.selectedPiece = currentPosition;
+    this.renderHighlights(clickedPosition, pieceMoves);
+    this.selectedPiece = clickedPosition;
+    return (this.validMoves = pieceMoves);
   }
 
-  renderHighlights(currentPosition, pieceMoves) {
+  renderHighlights(clickedPosition, pieceMoves) {
     // Clear all existing highlights
     this.clearAllHighlights();
 
     // Add highlight to current position
     const currentPieceCoords = document.querySelector(
-      `.cell[data-row="${currentPosition[0]}"][data-col="${currentPosition[1]}"]`
+      `.cell[data-row="${clickedPosition[0]}"][data-col="${clickedPosition[1]}"]`
     );
-    if (currentPieceCoords) {
+
+    const row = clickedPosition[0];
+    const col = clickedPosition[1];
+
+    // Coloring only the square including piece
+    if (currentPieceCoords && this.gameBoard.gridBoard[row][col] !== null) {
       currentPieceCoords.classList.add('selected');
     }
 
@@ -121,13 +181,9 @@ class BoardRenderer {
     }
   }
 
-  removeHighlights(highlight) {
-    return highlight.remove();
-  }
-
   clearAllHighlights() {
     const existingHighlight = this.board.querySelectorAll('.highlight');
-    existingHighlight.forEach((highlight) => this.removeHighlights(highlight));
+    existingHighlight.forEach((highlight) => highlight.remove());
 
     // Remove selected cell highlight
     const previousSelected = this.board.querySelector('.selected');
@@ -137,7 +193,9 @@ class BoardRenderer {
   }
 }
 
-const gameBoard = new BoardState();
+
+
+const gameBoard = new gridBoard();
 gameBoard.initGame();
 const renderer = new BoardRenderer(document.getElementById('board'), gameBoard);
 renderer.onClick();

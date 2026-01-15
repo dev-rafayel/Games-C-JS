@@ -9,9 +9,9 @@ export class Knight extends Piece {
     this.hasMoved = hasMoved;
   }
 
-  getMoves(piece, board, row, col) {
-    const finalMoves = [];
-    const probobalMoves = [
+  getMoves(board, row, col) {
+    const finalDirections = [];
+    const probobalDirections = [
       [-1, 2],
       [-1, -2],
       [1, 2],
@@ -22,7 +22,7 @@ export class Knight extends Piece {
       [-2, -1],
     ];
 
-    for (const i of probobalMoves) {
+    for (const i of probobalDirections) {
       const [dx, dy] = [i[0], i[1]];
       const newRow = row + dx;
       const newCol = col + dy;
@@ -31,19 +31,15 @@ export class Knight extends Piece {
 
       if (board[newRow][newCol] !== null) {
         const anotherPiece = board[newRow][newCol];
-        if (anotherPiece.color !== this.color) {
-          finalMoves.push([newRow, newCol]);
+        if (anotherPiece.type !== 'King' && anotherPiece.color !== this.color) {
+          finalDirections.push([newRow, newCol]);
         }
       } else {
-        finalMoves.push([newRow, newCol]);
+        finalDirections.push([newRow, newCol]);
       }
     }
-    // console.log(finalMoves);
-    return finalMoves;
-  }
-
-  applyMove(fromRow, fromCol, toRow, toCol) {
-    
+    // console.log(finalDirections);
+    return finalDirections;
   }
 
   isChecked(row, col) {}
