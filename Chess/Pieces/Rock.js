@@ -8,7 +8,7 @@ export class Rock extends Piece {
         this.hasMoved = hasMoved;
     }
 
-    getMoves(piece) {}
+    getMoves(board, row, col) {}
 
     isChecked(row, col) {}
 }

@@ -88,6 +88,9 @@ export class gridBoard {
     const [toRow, toCol] = [toClickedPosition[0], toClickedPosition[1]];
 
     this.gridBoard[toRow][toCol] = this.gridBoard[fromRow][fromCol];
+    if (this.gridBoard[toRow][toCol].type === 'pawn') {
+      this.gridBoard[toRow][toCol].hasMoved = true;
+    }
     this.gridBoard[fromRow][fromCol] = null;
     
     ++this.stepCount;
@@ -98,6 +101,6 @@ export class gridBoard {
   saveboardState() {
     const deepCopy = this.gridBoard.map(row => [...row]);
     this.boardState.set(this.stepCount, deepCopy);
-    console.log(this.gridBoard);
+    // console.log(this.gridBoard);
   }
 }

@@ -6,10 +6,10 @@ export class King extends Piece {
     this.color = color;
     this.imagePath = this.color === 'white' ? '../Images/wk.png' : '../Images/bk.png';
     this.hasMoved = hasMoved;
-    this.type = 'King';
+    this.type = 'king';
   }
 
-  getMoves(piece) {}
+  getMoves(board, row, col) {}
 
   isChecked(row, col) {}
 }

@@ -1,5 +1,4 @@
 import { gridBoard } from '../Game_logic/main.js';
-import { Piece } from '../Pieces/Piece.js';
 
 class BoardRenderer {
   #size = 8;

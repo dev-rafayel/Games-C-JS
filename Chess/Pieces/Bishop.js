@@ -25,14 +25,16 @@ export class Bishop extends Piece {
       while (this.isValidBorder(newRow, newCol)) {
         const pieceSquare = board[newRow][newCol];
 
-        if (pieceSquare !== null) {
+        if (pieceSquare !== null && pieceSquare.color === this.color) {
+          break;
+        } else if (pieceSquare !== null) {
           const anotherPiece = board[newRow][newCol];
-          if (anotherPiece.type !== 'King' && anotherPiece.color !== this.color) {
-            probobalDirections.push([newRow, newCol]);
+          if (anotherPiece.type !== 'king' && anotherPiece !== this.color) {
+            finalDirections.push([newRow, newCol]);
             break;
-          } 
+          }
         } else {
-          probobalDirections.push([newRow, newCol]);
+          finalDirections.push([newRow, newCol]);
         }
         newRow += dx;
         newCol += dy;
@@ -41,5 +43,5 @@ export class Bishop extends Piece {
     return finalDirections;
   }
 
-  isChecked(row, col) { }
+  isChecked(row, col) {}
 }

@@ -8,7 +8,7 @@ export class Queen extends Piece {
         this.hasMoved = hasMoved;
     }
 
-    getMoves(piece) {}
+    getMoves(board, row, col) {}
 
     isChecked(row, col) {}
 }

@@ -31,7 +31,7 @@ export class Knight extends Piece {
 
       if (board[newRow][newCol] !== null) {
         const anotherPiece = board[newRow][newCol];
-        if (anotherPiece.type !== 'King' && anotherPiece.color !== this.color) {
+        if (anotherPiece.type !== 'king' && anotherPiece.color !== this.color) {
           finalDirections.push([newRow, newCol]);
         }
       } else {
