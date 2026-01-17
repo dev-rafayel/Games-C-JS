@@ -97,6 +97,8 @@ class BoardRenderer {
       const row = parseInt(cell.dataset.row);
       const col = parseInt(cell.dataset.col);
 
+      const piece = this.gameBoard.gridBoard[row][col];
+
       if (this.selectedPiece) {
         // Check if click is the same piece again
         if (
@@ -122,9 +124,12 @@ class BoardRenderer {
           this.selectedPiece = null;
           this.validMoves = null;
         } else {
-          // Select another piece
-          if (this.gameBoard.gridBoard[row][col] !== null) {
-            this.selectPiece(row, col, board);
+          // Select another piece 
+          const clickedPiece = this.gameBoard.gridBoard[row][col];
+          if (clickedPiece !== null) {
+            if (clickedPiece.color === gameBoard.player) {
+              this.selectPiece(row, col, board);
+            }
           } else {
             // Deselect piece
             this.clearAllHighlights();
@@ -133,6 +138,11 @@ class BoardRenderer {
           }
         }
       } else {
+        // Select only own pieces
+        const clickedPiece = this.gameBoard.gridBoard[row][col];
+        if (clickedPiece !== null && clickedPiece.color !== gameBoard.player) {
+          return;
+        }
         this.selectPiece(row, col, board);
       }
     });

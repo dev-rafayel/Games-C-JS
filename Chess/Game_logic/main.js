@@ -8,7 +8,8 @@ import { Pawn } from '/Pieces/Pawn.js';
 export class gridBoard {
   constructor() {
     this.boardState = new Map();
-    this.stepCount = 0; 
+    this.stepCount = 0;
+    this.player = 'white';
     this.gridBoard = new Array(8)
       .fill(null)
       .map(() => new Array(8).fill(null));
@@ -92,9 +93,10 @@ export class gridBoard {
       this.gridBoard[toRow][toCol].hasMoved = true;
     }
     this.gridBoard[fromRow][fromCol] = null;
-    
+
     ++this.stepCount;
     this.saveboardState();
+    this.changePlayerTurn();
     return [toRow, toCol];
   }
 
@@ -102,5 +104,9 @@ export class gridBoard {
     const deepCopy = this.gridBoard.map(row => [...row]);
     this.boardState.set(this.stepCount, deepCopy);
     // console.log(this.gridBoard);
+  }
+
+  changePlayerTurn() {
+    return this.player = this.player === 'white' ? 'black' : 'white';
   }
 }
