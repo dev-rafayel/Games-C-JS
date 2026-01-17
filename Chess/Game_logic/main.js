@@ -65,9 +65,9 @@ export class gridBoard {
       for (let col = 0; col < 8; ++col) {
         const pieceClass = this.startPositions[row][col];
         if (pieceClass && row < 2) {
-          this.gridBoard[row][col] = new pieceClass('black', false);
+          this.gridBoard[row][col] = new pieceClass('black');
         } else if (pieceClass && row > 5) {
-          this.gridBoard[row][col] = new pieceClass('white', false);
+          this.gridBoard[row][col] = new pieceClass('white');
         } else {
           this.gridBoard[row][col] = null;
         }

@@ -1,14 +1,49 @@
 import { Piece } from "./Piece.js";
 
 export class Queen extends Piece {
-    constructor(color, hasMoved) {
-        super();
-        this.color = color;
-        this.imagePath = this.color === 'white' ? '../Images/wq.png' : '../Images/bq.png';
-        this.hasMoved = hasMoved;
+  constructor(color) {
+    super();
+    this.color = color;
+    this.imagePath = this.color === 'white' ? '../Images/wq.png' : '../Images/bq.png';
+  }
+
+  getMoves(board, row, col) {
+    const finalDirections = [];
+    const probobalDirections = [
+      [0, -1],
+      [0, 1],
+      [1, 0],
+      [-1, 0],
+      [-1, -1],
+      [-1, 1],
+      [1, -1],
+      [1, 1],
+    ];
+
+    for (const move of probobalDirections) {
+      let [dx, dy] = [move[0], move[1]];
+      let [newRow, newCol] = [row + dx, col + dy];
+
+      while (this.isValidBorder(newRow, newCol)) {
+        const pieceSquare = board[newRow][newCol];
+
+        if (pieceSquare !== null && pieceSquare.color === this.color) {
+          break;
+        } else if (pieceSquare !== null) {
+          const anotherPiece = board[newRow][newCol];
+          if (anotherPiece.type !== 'king' && anotherPiece !== this.color) {
+            finalDirections.push([newRow, newCol]);
+            break;
+          }
+        } else {
+          finalDirections.push([newRow, newCol]);
+        }
+        newRow += dx;
+        newCol += dy;
+      }
     }
+    return finalDirections;
+  }
 
-    getMoves(board, row, col) {}
-
-    isChecked(row, col) {}
+  isChecked(row, col) { }
 }

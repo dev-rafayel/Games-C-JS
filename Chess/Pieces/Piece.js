@@ -5,7 +5,6 @@ export class Piece {
     }
     this.color = '';
     this.imagePath = '';
-    this.hasMoved = false;
   }
 
   getMoves() {}

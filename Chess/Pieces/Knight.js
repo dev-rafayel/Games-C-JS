@@ -1,12 +1,11 @@
 import { Piece } from './Piece.js';
 
 export class Knight extends Piece {
-  constructor(color, hasMoved) {
+  constructor(color) {
     super();
     this.color = color;
     this.imagePath =
       this.color === 'white' ? '../Images/wn.png' : '../Images/bn.png';
-    this.hasMoved = hasMoved;
   }
 
   getMoves(board, row, col) {
@@ -22,10 +21,9 @@ export class Knight extends Piece {
       [-2, -1],
     ];
 
-    for (const i of probobalDirections) {
-      const [dx, dy] = [i[0], i[1]];
-      const newRow = row + dx;
-      const newCol = col + dy;
+    for (const move of probobalDirections) {
+      const [dx, dy] = [move[0], move[1]];
+      const [newRow, newCol] = [row + dx, col + dy];
 
       if (!this.isValidBorder(newRow, newCol)) continue;
 
@@ -38,9 +36,8 @@ export class Knight extends Piece {
         finalDirections.push([newRow, newCol]);
       }
     }
-    // console.log(finalDirections);
     return finalDirections;
   }
 
-  isChecked(row, col) {}
+  isChecked(row, col) { }
 }
