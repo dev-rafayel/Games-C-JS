@@ -97,6 +97,7 @@ class BoardRenderer {
       const row = parseInt(cell.dataset.row);
       const col = parseInt(cell.dataset.col);
 
+
       const piece = this.gameBoard.gridBoard[row][col];
 
       if (this.selectedPiece) {
@@ -115,11 +116,12 @@ class BoardRenderer {
         const isValidMove = this.validMoves.some(
           (move) => move[0] === row && move[1] === col
         );
-
+        
         // Apply move
         if (isValidMove) {
           gameBoard.applyMove(this.selectedPiece, [row, col]);
           this.clearAllHighlights();
+          this.renderLastMoveHighlights(this.selectedPiece, [row, col]);
           this.renderChangedBoard(this.selectedPiece, [row, col]);
           this.selectedPiece = null;
           this.validMoves = null;
@@ -167,8 +169,8 @@ class BoardRenderer {
       `.cell[data-row="${clickedPosition[0]}"][data-col="${clickedPosition[1]}"]`
     );
 
-    const row = clickedPosition[0];
-    const col = clickedPosition[1];
+    const [row, col] = [clickedPosition[0], clickedPosition[1]];
+
 
     // Coloring only the square including piece
     if (currentPieceCoords && this.gameBoard.gridBoard[row][col] !== null) {
@@ -189,6 +191,31 @@ class BoardRenderer {
       }
     }
   }
+
+  renderLastMoveHighlights(fromClickedPosition, toClickedPosition) {
+    // Clear previous last move highlights
+    const previousFrom = this.board.querySelector('.fromCoords');
+    const previousTo = this.board.querySelector('.toCoords');
+    if (previousFrom) previousFrom.classList.remove('fromCoords');
+    if (previousTo) previousTo.classList.remove('toCoords');
+
+    const [fromRow, fromCol] = [fromClickedPosition[0], fromClickedPosition[1]];
+    const [toRow, toCol] = [toClickedPosition[0], toClickedPosition[1]];
+
+    const fromCell = document.querySelector(
+      `.cell[data-row="${fromRow}"][data-col="${fromCol}"]`
+    );
+    const toCell = document.querySelector(
+      `.cell[data-row="${toRow}"][data-col="${toCol}"]`
+    );
+
+    if (fromCell && toCell) {
+      fromCell.classList.add('fromCoords');
+      toCell.classList.add('toCoords');
+    }
+  }
+
+  renderPieceTakingHighlight() {}
 
   clearAllHighlights() {
     const existingHighlight = this.board.querySelectorAll('.highlight');

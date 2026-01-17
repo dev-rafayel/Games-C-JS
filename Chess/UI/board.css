@@ -71,3 +71,11 @@ body {
 .selected {
   background-color: rgb(244, 245, 142);
 }
+
+.fromCoords {
+  background-color: rgb(244, 245, 142);
+}
+
+.toCoords {
+  background-color: rgb(185, 201, 80);
+}
