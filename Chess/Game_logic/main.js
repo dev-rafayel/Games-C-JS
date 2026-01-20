@@ -10,54 +10,16 @@ export class gridBoard {
     this.boardState = new Map();
     this.stepCount = 0;
     this.player = 'white';
-    this.gridBoard = new Array(8)
-      .fill(null)
-      .map(() => new Array(8).fill(null));
+    this.gridBoard = new Array(8).fill(null).map(() => new Array(8).fill(null));
     this.startPositions = [
-      [
-        Rock,
-        Knight,
-        Bishop,
-        Queen,
-        King,
-        Bishop,
-        Knight,
-        Rock,
-      ],
-      [
-        Pawn,
-        Pawn,
-        Pawn,
-        Pawn,
-        Pawn,
-        Pawn,
-        Pawn,
-        Pawn,
-      ],
+      [Rock, Knight, Bishop, Queen, King, Bishop, Knight, Rock],
+      [Pawn, Pawn, Pawn, Pawn, Pawn, Pawn, Pawn, Pawn],
       [null, null, null, null, null, null, null, null],
       [null, null, null, null, null, null, null, null],
       [null, null, null, null, null, null, null, null],
       [null, null, null, null, null, null, null, null],
-      [
-        Pawn,
-        Pawn,
-        Pawn,
-        Pawn,
-        Pawn,
-        Pawn,
-        Pawn,
-        Pawn,
-      ],
-      [
-        Rock,
-        Knight,
-        Bishop,
-        Queen,
-        King,
-        Bishop,
-        Knight,
-        Rock,
-      ],
+      [Pawn, Pawn, Pawn, Pawn, Pawn, Pawn, Pawn, Pawn],
+      [Rock, Knight, Bishop, Queen, King, Bishop, Knight, Rock],
     ];
   }
 
@@ -89,24 +51,25 @@ export class gridBoard {
     const [toRow, toCol] = [toClickedPosition[0], toClickedPosition[1]];
 
     this.gridBoard[toRow][toCol] = this.gridBoard[fromRow][fromCol];
-    if (this.gridBoard[toRow][toCol].type === 'pawn') {
+    if (!this.gridBoard[toRow][toCol].hasMoved) {
       this.gridBoard[toRow][toCol].hasMoved = true;
+      console.log(this.gridBoard[toRow][toCol])
     }
     this.gridBoard[fromRow][fromCol] = null;
 
     ++this.stepCount;
     this.saveboardState();
-    this.changePlayerTurn();
+    // this.changePlayerTurn();
     return [toRow, toCol];
   }
 
   saveboardState() {
-    const deepCopy = this.gridBoard.map(row => [...row]);
+    const deepCopy = this.gridBoard.map((row) => [...row]);
     this.boardState.set(this.stepCount, deepCopy);
     // console.log(this.gridBoard);
   }
 
   changePlayerTurn() {
-    return this.player = this.player === 'white' ? 'black' : 'white';
+    return (this.player = this.player === 'white' ? 'black' : 'white');
   }
 }

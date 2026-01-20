@@ -1,0 +1,31 @@
+{
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "editor.formatOnSave": true,
+  "editor.formatOnPaste": true,
+  "[javascript]": {
+    "editor.defaultFormatter": "vscode.typescript-language-features"
+  },
+  "[json]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[css]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[html]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "prettier.requireConfig": false,
+  "prettier.configPath": ".prettierrc.json",
+  "prettier.enable": true,
+  "files.exclude": {
+    "**/.prettierrc.json": true,
+    "**/.prettierignore": true,
+    "**/package-lock.json": true,
+    "**/jsconfig.json": true,
+    "**/.vscode": true,
+    "**/.DS_Store": true
+  },
+  "[jsonc]": {
+    "editor.defaultFormatter": "vscode.json-language-features"
+  }
+}

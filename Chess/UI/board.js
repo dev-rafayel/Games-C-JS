@@ -51,7 +51,7 @@ class BoardRenderer {
           img.classList.add('piece');
 
           const cell = document.querySelector(
-            `.cell[data-row="${row}"][data-col="${col}"]`
+            `.cell[data-row="${row}"][data-col="${col}"]`,
           );
           if (cell) {
             cell.appendChild(img);
@@ -66,10 +66,10 @@ class BoardRenderer {
     const [toRow, toCol] = toClickedPosition;
 
     const fromCell = document.querySelector(
-      `.cell[data-row='${fromRow}'][data-col='${fromCol}']`
+      `.cell[data-row='${fromRow}'][data-col='${fromCol}']`,
     );
     const toCell = document.querySelector(
-      `.cell[data-row='${toRow}'][data-col='${toCol}']`
+      `.cell[data-row='${toRow}'][data-col='${toCol}']`,
     );
 
     if (!fromCell || !toCell) return;
@@ -97,7 +97,6 @@ class BoardRenderer {
       const row = parseInt(cell.dataset.row);
       const col = parseInt(cell.dataset.col);
 
-
       const piece = this.gameBoard.gridBoard[row][col];
 
       if (this.selectedPiece) {
@@ -114,9 +113,9 @@ class BoardRenderer {
         }
 
         const isValidMove = this.validMoves.some(
-          (move) => move[0] === row && move[1] === col
+          (move) => move[0] === row && move[1] === col,
         );
-        
+
         // Apply move
         if (isValidMove) {
           gameBoard.applyMove(this.selectedPiece, [row, col]);
@@ -126,7 +125,7 @@ class BoardRenderer {
           this.selectedPiece = null;
           this.validMoves = null;
         } else {
-          // Select another piece 
+          // Select another piece
           const clickedPiece = this.gameBoard.gridBoard[row][col];
           if (clickedPiece !== null) {
             if (clickedPiece.color === gameBoard.player) {
@@ -155,6 +154,7 @@ class BoardRenderer {
 
     // Select new piece
     const pieceMoves = gameBoard.getPossibleMoves(row, col);
+    if (!pieceMoves) return;
     this.renderHighlights(clickedPosition, pieceMoves);
     this.selectedPiece = clickedPosition;
     return (this.validMoves = pieceMoves);
@@ -166,11 +166,10 @@ class BoardRenderer {
 
     // Add highlight to current position
     const currentPieceCoords = document.querySelector(
-      `.cell[data-row="${clickedPosition[0]}"][data-col="${clickedPosition[1]}"]`
+      `.cell[data-row="${clickedPosition[0]}"][data-col="${clickedPosition[1]}"]`,
     );
 
     const [row, col] = [clickedPosition[0], clickedPosition[1]];
-
 
     // Coloring only the square including piece
     if (currentPieceCoords && this.gameBoard.gridBoard[row][col] !== null) {
@@ -181,7 +180,7 @@ class BoardRenderer {
       const row = coords[0];
       const col = coords[1];
       const cell = document.querySelector(
-        `.cell[data-row="${row}"][data-col="${col}"]`
+        `.cell[data-row="${row}"][data-col="${col}"]`,
       );
 
       if (cell) {
@@ -203,10 +202,10 @@ class BoardRenderer {
     const [toRow, toCol] = [toClickedPosition[0], toClickedPosition[1]];
 
     const fromCell = document.querySelector(
-      `.cell[data-row="${fromRow}"][data-col="${fromCol}"]`
+      `.cell[data-row="${fromRow}"][data-col="${fromCol}"]`,
     );
     const toCell = document.querySelector(
-      `.cell[data-row="${toRow}"][data-col="${toCol}"]`
+      `.cell[data-row="${toRow}"][data-col="${toCol}"]`,
     );
 
     if (fromCell && toCell) {
@@ -228,8 +227,6 @@ class BoardRenderer {
     }
   }
 }
-
-
 
 const gameBoard = new gridBoard();
 gameBoard.initGame();

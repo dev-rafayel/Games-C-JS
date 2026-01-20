@@ -1,10 +1,13 @@
-import { Piece } from "./Piece.js";
+import { Piece } from './Piece.js';
 
 export class Rock extends Piece {
   constructor(color) {
     super();
     this.color = color;
-    this.imagePath = this.color === 'white' ? '../Images/wr.png' : '../Images/br.png';
+    this.imagePath =
+      this.color === 'white' ? '../Images/wr.png' : '../Images/br.png';
+    this.type = 'rock';
+    this.hasMoved = false;
   }
 
   getMoves(board, row, col) {
@@ -13,7 +16,7 @@ export class Rock extends Piece {
       [0, -1],
       [0, 1],
       [1, 0],
-      [-1, 0]
+      [-1, 0],
     ];
 
     for (const move of probobalDirections) {
@@ -22,7 +25,7 @@ export class Rock extends Piece {
 
       while (this.isValidBorder(newRow, newCol)) {
         const pieceSquare = board[newRow][newCol];
-        
+
         if (pieceSquare !== null && pieceSquare.color === this.color) {
           break;
         } else if (pieceSquare !== null) {
@@ -41,5 +44,5 @@ export class Rock extends Piece {
     return finalDirections;
   }
 
-  isChecked(row, col) { }
+  isChecked(row, col) {}
 }

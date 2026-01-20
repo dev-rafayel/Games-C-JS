@@ -39,5 +39,5 @@ export class Knight extends Piece {
     return finalDirections;
   }
 
-  isChecked(row, col) { }
+  isChecked(row, col) {}
 }

@@ -37,23 +37,23 @@ body {
 }
 
 .colLetter {
-    position: absolute;
-    left: 69px;
-    top: 60px;
-    font-size: larger;
-    font-weight: bold;
+  position: absolute;
+  left: 69px;
+  top: 60px;
+  font-size: larger;
+  font-weight: bold;
 }
 
 .rowNumber {
-    position: absolute;
-    font-size: larger;
-    top: 4px;
-    left: 2px;
-    font-weight: bold;
+  position: absolute;
+  font-size: larger;
+  top: 4px;
+  left: 2px;
+  font-weight: bold;
 }
 
 .piece {
-    width: 85px;
+  width: 85px;
 }
 
 .highlight {

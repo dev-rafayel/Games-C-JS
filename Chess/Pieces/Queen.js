@@ -1,10 +1,11 @@
-import { Piece } from "./Piece.js";
+import { Piece } from './Piece.js';
 
 export class Queen extends Piece {
   constructor(color) {
     super();
     this.color = color;
-    this.imagePath = this.color === 'white' ? '../Images/wq.png' : '../Images/bq.png';
+    this.imagePath =
+      this.color === 'white' ? '../Images/wq.png' : '../Images/bq.png';
   }
 
   getMoves(board, row, col) {
@@ -45,5 +46,5 @@ export class Queen extends Piece {
     return finalDirections;
   }
 
-  isChecked(row, col) { }
+  isChecked(row, col) {}
 }
