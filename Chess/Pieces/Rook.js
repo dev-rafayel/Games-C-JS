@@ -24,14 +24,15 @@ export class Rock extends Piece {
       let [newRow, newCol] = [row + dx, col + dy];
 
       while (this.isValidBorder(newRow, newCol)) {
-        const pieceSquare = board[newRow][newCol];
+        const anotherPiece = board[newRow][newCol];
 
-        if (pieceSquare !== null && pieceSquare.color === this.color) {
+        if (anotherPiece !== null && anotherPiece.color === this.color) {
           break;
-        } else if (pieceSquare !== null) {
-          const anotherPiece = board[newRow][newCol];
+        } else if (anotherPiece !== null) {
           if (anotherPiece.type !== 'king' && anotherPiece !== this.color) {
             finalDirections.push([newRow, newCol]);
+            break;
+          } else {
             break;
           }
         } else {

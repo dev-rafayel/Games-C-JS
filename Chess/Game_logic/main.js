@@ -1,4 +1,4 @@
-import { Rock } from '/Pieces/Rock.js';
+import { Rook } from '/Pieces/Rook.js';
 import { Knight } from '/Pieces/Knight.js';
 import { Bishop } from '/Pieces/Bishop.js';
 import { Queen } from '/Pieces/Queen.js';
@@ -12,14 +12,14 @@ export class gridBoard {
     this.player = 'white';
     this.gridBoard = new Array(8).fill(null).map(() => new Array(8).fill(null));
     this.startPositions = [
-      [Rock, Knight, Bishop, Queen, King, Bishop, Knight, Rock],
+      [Rook, Knight, Bishop, Queen, King, Bishop, Knight, Rook],
       [Pawn, Pawn, Pawn, Pawn, Pawn, Pawn, Pawn, Pawn],
       [null, null, null, null, null, null, null, null],
       [null, null, null, null, null, null, null, null],
       [null, null, null, null, null, null, null, null],
       [null, null, null, null, null, null, null, null],
       [Pawn, Pawn, Pawn, Pawn, Pawn, Pawn, Pawn, Pawn],
-      [Rock, Knight, Bishop, Queen, King, Bishop, Knight, Rock],
+      [Rook, Knight, Bishop, Queen, King, Bishop, Knight, Rook],
     ];
   }
 

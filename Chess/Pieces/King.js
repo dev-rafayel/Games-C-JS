@@ -57,41 +57,40 @@ export class King extends Piece {
     const [row, col] = [currentPos[0], currentPos[1]];
     const [dx, dy] = [move[0], move[1]];
 
-    // Determine which side the trying to castle on
+    // Determine which side the king is trying to castle on
     const side = (dy > 0) ? 'kingside' : 'queenside';
-    const rockCol = (dy > 0) ? col + dy + 1 : col + dy - 2;
-    const rockRow = row;
+    const rookCol = (dy > 0) ? col + dy + 1 : col + dy - 2;
+    const rookRow = row;
 
     // If the king has already moved, the castling on this side is not allowed
     if (this.hasMoved) {
       return {
         canCastle: false,
         side,
-        rockPos: [rockRow, rockCol]
+        rookPos: [rookRow, rookCol]
       };
     }
 
-    const rock = board[rockRow][rockCol];
+    const rook = board[rookRow][rookCol];
     
     // If there is no rook, or it already moved, this side is not allowed
-
-    if (!rock || rock.type !== 'rock' || rock.hasMoved) {
+    if (!rook || rook.type !== 'rook' || rook.hasMoved) {
       return {
         canCastle: false,
         side,
-        rockPos: [rockRow, rockCol]
+        rookPos: [rookRow, rookCol]
       };
     }
 
     return {
       canCastle: true,
       side,
-      rockPos: [rockRow, rockCol]
+      rookPos: [rookRow, rookCol]
     };
   }
 
   isChecked(board, row, col) {
     const king = board[row][col];
-
+ 
   }
 }
