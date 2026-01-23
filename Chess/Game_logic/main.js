@@ -43,7 +43,16 @@ export class gridBoard {
     if (piece === null) {
       return;
     }
-    return piece.getMoves(this.gridBoard, row, col);
+
+    const pieceMoves = piece.getMoves(this.gridBoard, row, col);
+
+    // If it's a king, add castling moves
+    if (piece.type === 'king') {
+      const castlingMoves = this.getCastlingMoves(piece, row, col);
+      return [...pieceMoves, ...castlingMoves];
+    }
+
+    return pieceMoves;
   }
 
   applyMove(fromClickedPosition, toClickedPosition) {
@@ -63,6 +72,35 @@ export class gridBoard {
     return [toRow, toCol];
   }
 
+  getCastlingMoves(king, row, col) {
+    // If the king has already moved, castling is not allowed
+    if (!king || king.type !== 'king') return [];
+    if (king.hasMoved) return [];
+
+    const queenSideRook = this.gridBoard[row][0];
+    const kingSideRook = this.gridBoard[row][7];
+    const kingCol = col;
+    const castlingCoords = [];
+
+    // Check queenside castling
+    if (queenSideRook && queenSideRook.type === 'rook' && !queenSideRook.hasMoved) {
+      const areSquaresEmpty = this.#areSquaresEmpty(row, kingCol, 0);
+      if (areSquaresEmpty) {
+        castlingCoords.push([row, col - 2]); // King moves to c1/c8
+      }
+    }
+
+    // Check kingside castling
+    if (kingSideRook && kingSideRook.type === 'rook' && !kingSideRook.hasMoved) {
+      const areSquaresEmpty = this.#areSquaresEmpty(row, kingCol, 7);
+      if (areSquaresEmpty) {
+        castlingCoords.push([row, col + 2]); // King moves to g1/g8
+      }
+    }
+
+    return castlingCoords;
+  }
+
   saveboardState() {
     const deepCopy = this.gridBoard.map((row) => [...row]);
     this.boardState.set(this.stepCount, deepCopy);
@@ -71,5 +109,21 @@ export class gridBoard {
 
   changePlayerTurn() {
     return (this.player = this.player === 'white' ? 'black' : 'white');
+  }
+
+  // Helpers
+
+  #areSquaresEmpty(row, kingCol, rookCol) {
+    const step = rookCol > kingCol ? 1 : -1;
+    let col = kingCol + step;
+
+    while (col !== rookCol) {
+      if (this.gridBoard[row][col] !== null) {
+        return false;
+      }
+      col += step;
+    }
+
+    return true;
   }
 }

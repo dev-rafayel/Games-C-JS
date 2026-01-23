@@ -1,12 +1,12 @@
 import { Piece } from './Piece.js';
 
-export class Rock extends Piece {
+export class Rook extends Piece {
   constructor(color) {
     super();
     this.color = color;
     this.imagePath =
       this.color === 'white' ? '../Images/wr.png' : '../Images/br.png';
-    this.type = 'rock';
+    this.type = 'rook';
     this.hasMoved = false;
   }
 
